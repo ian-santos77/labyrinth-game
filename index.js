@@ -9,6 +9,7 @@ class Position {
 class Player {
     constructor(position) {
         this.pos = position
+        this.gold = 0
     }
     static show() {
         process.stdout.write('P ')
@@ -87,15 +88,21 @@ const movePlayer = (player, room) => {
     }
 }
 
+const getGold = (player) => {
+    player.gold += 10
+}
+
 const game = (player) => {
     player.reset()
     const room = new Room(8, 8)
     while (player.pos.y < room.height - 1 || player.pos.x < room.width - 1) {
         console.log('===ROOM ' + Room.number + '===')   
+        console.log('Gold:' + player.gold)
         room.print(player)
         movePlayer(player, room)
     }
     Room.number++
+    getGold(player)
 }
 
 const player = new Player (new Position(0, 0))
